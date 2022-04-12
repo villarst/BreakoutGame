@@ -1,35 +1,44 @@
+"""
+Paddle.py sets up the paddle that the user moves around to
+bounce the ball back to break the blocks. It sets up the color,
+width, and height of the paddle that is created in Game.py
+@authors Corey Rice & Steve Villarreal
+@version Sprint 2022
+"""
 import pygame
 
 BLACK = (0, 0, 0)
 
 
+# The Paddle class draws the paddle when passed the color, length, and width
+# from the game class which is derived from Sprite
 class Paddle(pygame.sprite.Sprite):
-    # This class represents a paddle. It derives from the "Sprite" class in Pygame.
 
     def __init__(self, color, width, height):
-        # Call the parent class (Sprite) constructor
         super().__init__()
 
         # Pass in the color of the paddle, its width and height.
-        # Set the background color and set it to be transparent
         self.image = pygame.Surface([width, height])
         self.image.fill(BLACK)
         self.image.set_colorkey(BLACK)
 
-        # Draw the paddle (a rectangle!)
+        # Draw the paddle as a rectangle in pygame
         pygame.draw.rect(self.image, color, [0, 0, width, height])
 
-        # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
+    # moveLeft checks to see that the paddle is not moving off the
+    # screen when the player moves it all the way to the left
     def moveLeft(self, pixels):
         self.rect.x -= pixels
-        # Check that you are not going too far (off the screen)
+
         if self.rect.x < 0:
             self.rect.x = 0
 
+    # moveRight checks to see that the paddle is not moving off the
+    # screen when the player moves it all the way to the right
     def moveRight(self, pixels):
         self.rect.x += pixels
-        # Check that you are not going too far (off the screen)
+
         if self.rect.x > 900:
             self.rect.x = 900
